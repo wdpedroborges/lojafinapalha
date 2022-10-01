@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Fina Palha | Cigarros de palha</title>
+	<link rel="stylesheet" type="text/css" href="/styles.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+	<link rel="icon" href="/icone.png">
+	<script type="text/javascript" src="/script.js" defer></script>
+</head>
+<body>
+<header>
+	<nav>
+		<div id="menuPrimeiraParte">
+			<h1>Fina Palha</h1>
+			<img src="/logo.jpg" class="logo">
+				<div id="containerBuscadorGeral">
+				<input type="search" placeholder="O que deseja encontrar?" name="buscadorGeral" id="buscadorGeral">
+				<i class="bi bi-search"></i>
+			</div>
+			<h3 id="sacolaMenu">Sacola <i class="bi bi-bag"></i> <span class="valorProdutosSacola">0</span></h3>
+			<i id="iconeMenuResponsivo" class="bi bi-list"></i>
+		</div>
+		<ul>
+			<li><i class="bi bi-basket"></i> <a href="/#produtos">Produtos</a></li>
+			<li><i class="bi bi-shop"></i> <a href="/sobre-nos#sobreNos">Sobre nós</a></li>
+			<li><i class="bi bi-hand-thumbs-up"></i> <a href="/seja-afiliado#sejaAfiliado">Seja um afiliado</a></li>
+			<li><i class="bi bi-binoculars"></i> <a href="/rastrear-pedido#rastrearPedido">Reastrear pedido</a></li>
+			<li><i class="bi bi-envelope"></i> <a href="/contato#contato">Contato</a></li>
+	        <% if (usuario) { %>
+		        <p id="saudacaoAdmin">Bem-vindo, <%= usuario %></p>
+		        <li><i class="bi bi-plus"></i> <a href="/produtos">Produtos</a></li>
+		         <li><i class="bi bi-plus"></i> <a href="/afiliados#cadastrarAfiliado">Afiliados</a></li>
+		        <li><i class="bi bi-box-arrow-left"></i> <a href="/logout-admin">Sair</a></li>
+	        <% } %>
+		</ul>
+	</nav>
+</header>
+<div class="slider">
+	<div class="slide">
+		<h3>Produto de qualidade com filtro e piteira!</h3>
+		<p>Artesanal. Palhas selecionadas. Fumo de primeira qualidade.</p>
+	</div>
+</div>
+<div class="toast"></div>

@@ -1,0 +1,718 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+*, *::before, *::after {
+	box-sizing: border-box;
+	font-family: 'Poppins', sans-serif;
+}
+
+:root {
+	--primeira-cor: #060606;
+	--segunda-cor: #dbce41;
+	--terceira-cor: #fff;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+}
+
+h2 {
+	font-size: 3rem;
+	position: relative;
+	text-align: center;
+}
+
+h2:after {
+  content: "";
+  background: var(--segunda-cor);
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 5px;
+  width: 10%;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    background-color: var(--primeira-cor);
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--segunda-cor);
+}
+
+::-moz-selection { /* para Firefox */
+    background-color: var(--primeira-cor);
+    color: var(--segunda-cor);
+  }
+  
+::selection {
+    background: var(--primeira-cor);
+    color: var(--segunda-cor);
+}
+
+.slider {
+	height: 70vh;
+	background: linear-gradient(to right, rgba(0, 0, 0, .7), rgba(0, 0, 0, .9)), url('../modelos/modelo-3.png');
+	background-repeat: no-repeat;
+	background-size: 250%;
+	background-attachment: fixed;
+	animation: moveBgBanner 5s ease-in-out infinite;
+	color: var(--terceira-cor);
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.slide {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+}
+
+.slide h3 {
+	font-size: 3.5rem;
+	margin-bottom: 0;
+}
+
+.slide p {
+	font-size: 2rem;
+}
+
+@keyframes moveBgBanner {
+	0% {
+		background-position: 50% 0%;
+	}
+	50% {
+		background-position: 50% 25%;
+	}
+	75% {
+		background-position: 30% 75%;
+	}
+	90% {
+		background-position: 40% 90%;
+	}
+	100% {
+		background-position: 50% 0%;
+	}
+}
+
+.slider p {
+	max-width: 45ch;
+}
+
+nav {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	background: var(--primeira-cor);
+	color: var(--terceira-cor);
+	height: 40vh;
+}
+
+#iconeMenuResponsivo {
+	display: none;
+}
+
+.logo {
+	margin: 1rem 0;
+	width: 15%;
+	height: auto;
+}
+
+nav h1 {
+	display: none;
+}
+
+nav ul {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	list-style: none;
+	height: 15vh;
+}
+
+nav ul li i {
+	color: var(--segunda-cor);
+	font-size: 1.5rem;
+}
+
+nav ul li a {
+	color: var(--terceira-cor);
+	text-decoration: none;
+}
+
+nav ul li a:hover {
+	color: var(--segunda-cor);
+	cursor: pointer;
+}
+
+nav #menuPrimeiraParte {
+	display: flex;
+	justify-content: space-around;
+}
+
+nav #menuPrimeiraParte {
+	align-items: center;
+}
+
+nav #buscadorGeral {
+	width: 100%;
+	text-align: center;
+	border: 1px solid var(--terceira-cor);
+	padding: 1rem;
+	font-size: 1rem;
+	border-radius: 1rem;
+}
+
+nav #buscadorGeral:focus {
+	border: 1px solid var(--terceira-cor);
+	outline: none;
+}
+
+#sacolaMenu:hover {
+	cursor: pointer;
+	text-decoration: underline;
+}
+
+#containerBuscadorGeral {
+	width: 30%;
+	position: relative;
+}
+
+#containerBuscadorGeral i {
+	position: absolute;
+	right: 5%;
+	top: 50%;
+	transform: translateY(-50%);
+	color: var(--primeira-cor);
+}
+
+/* produtos */
+#produtos {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	text-align: center;
+	min-height: 100vh;
+}
+
+.grid {
+	display: grid;
+	grid-template-columns: repeat( auto-fit, minmax(350px, 1fr) );
+	grid-gap: 1rem;
+	margin: 1rem;
+}
+
+.produto {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	border: 1px solid #eee;
+	padding: 1rem;
+}
+
+.tituloProduto {
+	text-transform: uppercase;
+	font-size: 2rem;
+	margin-bottom: 0;
+}
+
+.produto img {
+	max-height: 250px;
+	border-radius: 2rem;
+}
+
+.produto img:hover {
+	transform: scale(1.1);
+	border-radius: 0;
+	transition: 1s;
+	cursor: pointer;
+}
+
+.produto .preco {
+	font-size: 2rem;
+	color: seagreen;
+	font-weight: 700;
+}
+
+button {
+	margin-top: 1rem;
+	padding: 1rem;
+	border: none;
+	background: seagreen;
+	font-size: 1rem;
+	color: var(--terceira-cor);
+	border-radius: 1rem;
+}
+
+button:hover {
+	cursor: pointer;
+	opacity: .75;
+}
+
+button.btnAdicionarSacola {
+	border-radius: 0rem;
+	background-color: var(--segunda-cor);
+	color: var(--primeira-cor);
+}
+
+.btnRemoverProduto {
+	background-color: brown;
+}
+
+footer {
+	margin-top: 5rem;
+	background: var(--primeira-cor);
+	color: var(--terceira-cor);
+	min-height: 50vh;
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-around;
+	padding: 5rem;
+}
+
+footer img {
+	width: 25%;
+}
+
+footer a {
+	color: var(--segunda-cor);
+	text-decoration: none;
+	font-weight: bolder;
+}
+
+/* modais */
+.bg-modal {
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100vh;
+	width: 100vw;
+	background-color: rgba(0, 0, 0, .9);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 400;
+}
+
+.modal {
+	width: 75%;
+	min-height: 50%;
+	max-height: 95vh;
+	overflow-y: scroll;
+	background-color: var(--terceira-cor);
+	padding: 1rem;
+	border-radius: 1rem;
+	text-align: center;
+	position: relative;
+}
+
+#produtoModal, #sacolaModal {
+	display: none;
+}
+
+#sacolaModal table {
+	margin: 0 auto;
+	border-collapse: collapse;
+}
+
+#sacolaModal table th, table td {
+	border: 1px solid #606060;
+	padding: 1rem;
+	text-transform: uppercase;
+}
+
+table th {
+	color: var(--primeira-cor);
+	background-color: var(--segunda-cor);
+}
+
+table td {
+	color: var(--primeira-cor);
+}
+
+table tr:nth-child(even) {
+	background-color: #ccc;
+}
+
+table input {
+	background-color: transparent;
+}
+
+#sacolaModal .bi-trash {
+	cursor: pointer;
+	color: brown;
+	font-size: 1.5rem;
+}
+
+#sacolaModal table td input {
+	font-size: 1rem;
+	text-align: center;
+}
+
+#btnLimparSacola {
+	background-color: brown;
+	position: absolute;
+	top: 5%;
+	left: 5%;
+}
+
+.infoForaTabela, #calcularFrete, #dadosCadastrais {
+	padding: 1rem;
+	border: 1px dashed #ccc;
+	width: 50%;
+}
+
+.infoForaTabela {
+	font-size: 1.5rem;
+	font-family: monospace;
+	color: #212121;
+	margin: 0 auto;
+}
+
+.preco {
+	color: seagreen;
+}
+
+#calcularFrete {
+	width: 50%;
+	margin: 3rem auto;
+	text-align: center;
+}
+
+#dadosCadastrais {
+	margin: 3rem auto;
+}
+
+#dadosCadastrais p {
+	margin-bottom: 1rem;
+}
+
+.modal .icone-fechar {
+	position: absolute;
+	top: 5%;
+	right: 5%;
+	font-size: 2rem;
+	cursor: pointer;
+}
+
+/* toast */
+.toast {
+	width: 75vw;
+	min-height: 5vh;
+	padding: 1rem;
+	border-radius: 1rem;
+	position: fixed;
+	top: 5%;
+	left: 50%;
+	transform: translateX(-50%);
+	background: var(--primeira-cor);
+	color: var(--segunda-cor);
+	text-align: center;
+	font-weight: bolder;
+	z-index: 600;
+	border: 1px solid var(--segunda-cor);;
+	display: none;
+}
+
+#sacolaFlutuante {
+	z-index: 300;
+	position: fixed;
+	bottom: 5%;
+	right: 5%;
+	font-size: 1.5rem;
+	background-color: var(--primeira-cor);
+	color: var(--segunda-cor);
+	padding: 1rem;
+	border-radius: 1rem;
+	cursor: pointer;
+	border: 1px solid var(--segunda-cor);
+}
+
+#saudacaoAdmin {
+	position: absolute;
+	top: 1%;
+	left: 50%;
+	transform: translateX(-50%);
+	color: var(--segunda-cor);
+}
+
+@media (max-width: 1080px) {
+	#saudacaoAdmin {
+		position: absolute;
+		top: 75%;
+		color: var(--segunda-cor);
+	}
+
+	nav {
+		height: auto;
+		padding-bottom: 5vh;
+	}
+
+	#containerBuscadorGeral {
+		width: 95%;
+	}
+
+	#sacolaMenu {
+		display: none;
+	}
+
+	nav #menuPrimeiraParte {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	}
+
+	#btnLimparSacola {
+		font-size: .75rem;
+		padding: 5px;
+		left: 5%;
+		top: 1%;
+	}
+
+	#calcularFrete {
+		width: 100%;
+	}
+
+	nav ul {
+		position: fixed;
+		top: 0;
+		left: 0;
+		margin: 0;
+		z-index: 500;
+		height: 100vh;
+		width: 75vw;
+		flex-direction: column;
+		align-items: center;
+		justify-content: flex-end;
+		align-items: center;
+		background-color: var(--primeira-cor);
+		padding: 2rem;
+		display: none;
+	}
+
+	#iconeMenuResponsivo {
+		display: block;
+		position: fixed;
+		top: 0;
+		right: 0;
+		border-radius: 1rem 0 0 1rem;
+		font-size: 2.5rem;
+		cursor: pointer;
+		color: var(--segunda-cor);
+		background-color: var(--primeira-cor);
+	}
+
+	.logo {
+		width: 50%;
+	}
+
+	.slider {
+		animation: moveBgBanner 3s ease-in-out infinite;
+	}
+
+	.slide h3 {
+		font-size: 1.5rem;
+	}
+
+	.slide p {
+		font-size: 1rem;
+	}
+
+	.modal {
+		width: 95%;
+		overflow-x: scroll;
+	}
+
+	#sacolaModal table {
+		width: 50%;
+		font-size: 1rem;
+	}
+}
+
+/* formulários */
+
+form {
+	width: 75%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-start;
+	padding: 1rem;
+	margin: 0 auto;
+}
+
+form h2 {
+	width: 100%;
+	text-align: center;
+}
+
+.divInput {
+	position: relative;
+	width: 100%;
+	margin-bottom: 1rem;
+}
+
+.divInput i {
+	position: absolute;
+	top: 50%;
+	left: 0;
+	transform: translateY(-50%);
+	font-size: 1.5rem;
+	color: #ccc;
+}
+
+input {
+	padding: 1rem;
+	border: none;
+	padding-left: 2rem;
+	font-size: 1rem;
+	margin-top: 0;
+	width: 100%;
+}
+
+input:focus {
+	outline: none;
+	border: none;
+}
+
+.border-input {
+	display: block;
+	height: 1px;
+	width: 100%;
+	background: #ccc;
+}
+
+.border-input::after {
+	content: '';
+	display: block;
+	width: 0;
+	background: linear-gradient(to right, var(--primeira-cor), var(--segunda-cor));
+	height: 1px;
+	transition: .5s ease-in-out;
+}
+
+input:focus + .border-input:after {
+	width: 100%;
+}
+
+input:focus + .border-input + i {
+	color: var(--segunda-cor);
+}
+
+label {
+	position: absolute;
+	top: 50%;
+	left: 2rem;
+	transform: translateY(-50%);
+	color: #606060;
+	cursor: text;
+	animation: desceLabel .5s ease-in-out;
+}
+
+input:focus ~ label, input:not(:placeholder-shown) ~ label {
+	animation: sobeLabel .5s ease-in-out;
+	top: 0;
+	color: #606060;
+	cursor: pointer;
+}
+
+form button {
+	background-color: var(--segunda-cor);
+	color: var(--primeira-cor);
+}
+
+.venda {
+	border: 1px solid #212121;
+	padding: 1rem;
+	border-radius: 1rem;
+}
+
+.venda h3 {
+	background-color: #eee;
+	padding: 1rem;
+}
+
+.whatsapp, .stripe, .afiliadoResponsavel {
+	text-transform: uppercase;
+}
+
+.codigoRastreio {
+	font-weight: bolder;
+	border: 1px solid #eee;
+	padding: 1rem;
+	margin-top: 1rem;
+}
+
+.afiliadoResponsavel, .meioVenda, .compraConfirmada, .compraNaoConfirmada, .repassado {
+	font-weight: bolder;
+}
+
+.stripe {
+	color: dodgerblue;
+}
+
+.whatsapp {
+	color: darkorange;
+}
+
+.compraConfirmada, .repassado {
+	color: seagreen;
+}
+.compraNaoConfirmada {
+	color: brown;
+}
+
+.dadosComprador {
+	color: #606060;
+}
+
+.inputCodigoRastreio {
+	border: 1px solid #212121;
+	border-radius: 1rem;
+	background-color: #ccc;
+}
+
+.btnConfirmarCompra {
+	background-color: darkorange;
+}
+
+.btnExcluirVenda {
+	background-color: brown;
+}
+
+.nenhumaVendaRegistrada {
+	text-align: center;
+	color: brown;
+	font-weight: bolder;
+	font-size: 1.5rem;
+}
+
+@keyFrames sobeLabel {
+	from {
+		top: 50%;
+	}
+	to {
+		top: 0;
+	}
+}
+
+@keyFrames desceLabel {
+	from {
+		top: 0;
+	}
+	to {
+		top: 50%;
+	}
+}

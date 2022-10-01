@@ -1,0 +1,55 @@
+<%- include('partials/head'); -%>
+
+<main>
+	<section id="admin">
+		<form action="/login-admin" method="POST">
+			<h2>Admin</h2>
+			<p class="erro"></p>
+			<div class="divInput">
+				<input type="text" name="usuario" id="usuario" autocomplete="off" placeholder=" " required>
+				<span class="border-input"></span>
+				<i class="bi bi-person"></i>
+				<label for="usuario">Usuário*</label>
+			</div>
+			<div class="divInput">
+				<input type="password" name="senha" id="senha" autocomplete="off" placeholder=" " required>
+				<span class="border-input"></span>
+				<i class="bi bi-lock"></i>
+				<label for="senha">Senha*</label>
+			</div>
+			<button>Login</button>
+		</form>	
+	</section>
+</main>
+<script>
+	const form = document.querySelector('form');
+	const erro = document.querySelector('.erro');
+
+	form.addEventListener('submit', async e => {
+		e.preventDefault();
+
+		const usuario = form.usuario.value;
+		const senha = form.senha.value;
+
+		// reseta erro
+		erro.textContent = '';
+
+		try {
+			const res = await fetch('/login-admin', {
+				method: 'POST',
+				body: JSON.stringify({usuario, senha}),
+				headers: {'Content-Type': 'application/json'}
+			});
+			const data = await res.json();
+			if (data === 'Login inválido') {
+				erro.textContent = data;
+			} else {
+				window.location.href = "/";
+			}
+		} catch(err) {
+			console.log(err);
+		}
+	});
+</script>
+
+<%- include('partials/footer'); -%>

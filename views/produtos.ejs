@@ -1,0 +1,172 @@
+<%- include('partials/head'); -%>
+
+<main>
+	<section id="vendas">
+		<h2>Vendas</h2>
+		<div class="grid">
+			<% if (vendas.length > 0) { %>
+				<% vendas.forEach(venda => { %>
+					<div class="venda">
+						<h3>Venda <%= venda.codigoCompra %></h3>
+							<% if (venda.afiliado !== '') { %>
+								<p class="afiliadoResponsavel">afiliado responsável: <%= venda.afiliado %></p>
+							<% } else { %>
+								<p class="afiliadoResponsavel">afiliado responsável: n/a</p>
+							<% } %>
+
+							<% if (venda.repasse === 'Sim') { %>
+								<p class="repassado">Valor repassado: <%= venda.repasse %></p>
+							<% } else { %>
+								<button class="btnConfirmarRepasse" title="<%= venda.codigoCompra %>">Confirmar repasse</button>
+							<% } %>
+							<% if (venda.compraConfirmada === 'Sim') { %>
+								<p class="compraConfirmada">Compra confirmada: <%= venda.compraConfirmada %></p>
+								<p class="codigoRastreio">Código de rastreio: <input type="text" id="<%= venda.codigoCompra %>" value="<%= venda.codigoRastreio %>" class="inputCodigoRastreio"><button class="btnInformarCodigoRastreio" title="<%= venda.codigoCompra %>">Atualizar código de rastreio</button></p>
+							<% } else if (venda.meioVenda === 'whatsapp') { %>
+								<p class="compraNaoConfirmada">Compra confirmada: <%= venda.compraConfirmada %></p>
+								<button class="btnConfirmarCompraWhatsapp" title="<%= venda.codigoCompra %>">Confirmar esta compra</button>
+							<% } else { %>
+								<p class="compraNaoConfirmada">Compra confirmada: <%= venda.compraConfirmada %></p>
+							<% } %>
+
+							<% if (venda.meioVenda === 'whatsapp') { %>
+								<p class="meioVenda">Meio de venda: <span class="whatsapp"><%= venda.meioVenda %></span></p>
+							<% } else { %>
+								<p class="meioVenda">Meio de venda: <span class="stripe"><%= venda.meioVenda %></span></p>
+							<% } %>
+
+							<div class="dadosComprador">
+								<h4>Dados do comprador</h4>
+								<p>Nome e sobrenome: <%= venda.nomeSobrenome %></p>
+								<p>E-mail: <%= venda.email %></p>
+								<p>Telefone: <%= venda.telefone %></p>
+								<p>Cidade: <%= venda.cidade %></p>
+								<p>Bairro: <%= venda.bairro %></p>
+								<p>Rua/Logradouro: <%= venda.rua %></p>
+								<p>CEP: <%= venda.cep %></p>
+								<p>Produtos comprados: <%= venda.infoProdutos %></p>
+							</div>
+							<button class="btnExcluirVenda" title="<%= venda.codigoCompra %>">Excluir</button>
+					</div>
+				<% }) %>
+		    <% } else { %>
+		      <p class="nenhumaVendaRegistrada">Nenhuma venda registrada...</p>
+		    <% } %>
+		</div>
+	</section>
+	<section id="cadastrarProduto">
+		<form action="/produtos" method="POST" enctype="multipart/form-data">
+			<h2>Cadastrar produto</h2>
+			<p class="mensagem"></p>
+			<div class="divInput">
+				<input type="text" name="titulo" id="titulo" autocomplete="off" placeholder=" " required>
+				<span class="border-input"></span>
+				<i class="bi bi-caret-right"></i>
+				<label for="titulo">Título*</label>
+			</div>
+			<div class="divInput">
+				<input type="text" name="descricao" id="descricao" autocomplete="off" placeholder=" " required>
+				<span class="border-input"></span>
+				<i class="bi bi-caret-right"></i>
+				<label for="descricao">Descrição*</label>
+			</div>
+			<div class="divInput">
+				<input type="text" name="preco" id="preco" autocomplete="off" placeholder=" " required>
+				<span class="border-input"></span>
+				<i class="bi bi-caret-right"></i>
+				<label for="preco">Preço*</label>
+			</div>
+			<div class="divInput">
+				<input type="file" name="imagem" id="imagem" autocomplete="off" placeholder=" " required>
+				<span class="border-input"></span>
+				<i class="bi bi-caret-right"></i>
+				<label for="imagem">Imagem*</label>
+			</div>
+			<button>Cadastrar</button>
+		</form>	
+	</section>
+</main>
+<script>
+	const form = document.querySelector('form');
+	const mensagem = document.querySelector('.mensagem');
+
+	form.addEventListener('submit', async e => {
+		e.preventDefault();
+		const formData = new FormData(form);
+		try {
+			const res = await fetch('/produtos', {
+				method: 'POST',
+				body: formData
+			});
+			const data = await res.json();
+			if (data !== 'Produto cadastrado com sucesso.') {
+				if (data.code == '11000') {
+					mensagem.textContent = 'Já existe um produto cadastrado com esse nome.';
+				} else {
+					mensagem.textContent = data.message;
+				}
+			} else {
+				mensagem.textContent = 'Produto cadastrado com sucesso.';
+
+				form.titulo.value = '';
+				form.descricao.value = '';
+				form.preco.value = '';
+				form.imagem.value = '';
+
+			}
+		} catch(err) {
+			console.log(err);
+		}
+	});
+
+	// botões
+	const btnExcluirVenda = [... document.querySelectorAll('.btnExcluirVenda')];
+	const btnConfirmarCompraWhatsapp = [... document.querySelectorAll('.btnConfirmarCompraWhatsapp')];
+	const btnInformarCodigoRastreio = [... document.querySelectorAll('.btnInformarCodigoRastreio')];
+	const btnConfirmarRepasse = [... document.querySelectorAll('.btnConfirmarRepasse')];
+
+	async function enviaPost(dados, endpoint) {
+		try {
+			const res = await fetch(endpoint, {
+				method: 'POST',
+				body: dados,
+				headers: {'Content-Type': 'application/json'}
+			});
+			const data = await res.json();
+			exibeToast(data.mensagem);
+
+			setTimeout(() => {
+				document.location.reload();
+			}, 3000);
+		} catch(err) {
+			console.log(err);
+		}
+	}
+
+	btnExcluirVenda.forEach(btn => {
+		btn.addEventListener('click', () => {
+			enviaPost(JSON.stringify({codigo: btn.getAttribute('title')}), '/excluir-venda');
+		});
+	});
+
+	btnConfirmarCompraWhatsapp.forEach(btn => {
+		btn.addEventListener('click', () => {
+			enviaPost(JSON.stringify({codigo: btn.getAttribute('title')}), '/confirmar-compra-whatsapp');
+		});
+	});
+
+	btnInformarCodigoRastreio.forEach(btn => {
+		btn.addEventListener('click', () => {
+			let codigoRastreio = document.getElementById(btn.getAttribute('title')).value;
+			enviaPost(JSON.stringify({codigo: btn.getAttribute('title'), codigoRastreio: codigoRastreio}), '/informar-codigo-rastreio');
+		});
+	});
+
+	btnConfirmarRepasse.forEach(btn => {
+		btn.addEventListener('click', () => {
+			enviaPost(JSON.stringify({codigo: btn.getAttribute('title')}), '/confirmar-repasse');
+		});
+	});
+</script>
+
+<%- include('partials/footer'); -%>

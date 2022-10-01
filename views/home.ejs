@@ -1,0 +1,117 @@
+<%- include('partials/head'); -%>
+
+<main>
+	<section id="produtos">
+		<h2>Produtos</h2>
+		<div class="grid">
+			<% if (produtos.length > 0) { %>
+				<% produtos.forEach(produto => { %>
+					<div class="produto">
+						<img src="produtos/<%= produto.imagem %>" class="imagemProduto">
+						<h3 class="tituloProduto" title="<%= produto.descricao %>"><%= produto.titulo %></h3>
+						<span class="preco" title="<%= produto.titulo %>">R$<%= produto.preco %></span>
+						<button class="btnAdicionarSacola" title="<%= produto.titulo %>"><i class="bi bi-bag"></i> Adicionar à sacola</button>
+						<% if (usuario) { %>
+							<button class="btnRemoverProduto" title="<%= produto._id %>"><i class="bi bi-trash"></i></button>
+						<% } %>
+					</div>
+				<% }) %>
+		    <% } else { %>
+		      <p>Nenhum produto cadastrado...</p>
+		    <% } %>
+		</div>
+	</section>
+</main>
+
+<div class="bg-modal" id="sacolaModal">
+	<div class="modal">
+		<i class="bi bi-x icone-fechar"></i>
+		<h2>Sacola</h2>
+		<table id="tabelaSacola">
+			<tr><th>Nome</th><th>Quantidade</th><th>Preço (R$)</th><th>Ação</th></tr>
+		</table>
+
+		<div id="calcularFrete">
+			<p id="msg"></p>
+			<div class="divInput">
+				<input type="text" name="cepCadastro" id="cepCadastro" autocomplete="off" placeholder=" " required>
+				<span class="border-input"></span>
+				<i class="bi bi-truck"></i>
+				<label for="cepCadastro">Digite aqui seu CEP para calcular o frete</label>
+			</div>
+			<p id="resultadoPreco"></p>
+			<p id="resultadoPrazo"></p>
+		</div>
+
+		<div class="infoForaTabela">
+			<p>Frete: <span class="preco">R$<span id="precoFrete">0,00</span></span></p>
+			<p>Total: <span class="preco">R$<span id="totalCompra">0,00</span></span></p>
+		</div>
+
+		<div id="dadosCadastrais">
+			<h3>Dados cadastrais</h3>
+			<p>É importante preencher estes dados para que o produto chegue até a você com segurança. Obrigado!</p>
+			<div class="divInput">
+				<input type="text" name="nomeCadastro" id="nomeCadastro" autocomplete="off" placeholder=" " required>
+				<span class="border-input"></span>
+				<i class="bi bi-person"></i>
+				<label for="nomeCadastro">Nome e sobrenome</label>
+			</div>
+			<div class="divInput">
+				<input type="text" name="emailCadastro" id="emailCadastro" autocomplete="off" placeholder=" " required>
+				<span class="border-input"></span>
+				<i class="bi bi-envelope"></i>
+				<label for="emailCadastro">E-mail para contato</label>
+			</div>
+			<div class="divInput">
+				<input type="text" name="telefoneCadastro" id="telefoneCadastro" autocomplete="off" placeholder=" " required>
+				<span class="border-input"></span>
+				<i class="bi bi-telephone"></i>
+				<label for="telefoneCadastro">Telefone para contato</label>
+			</div>	
+			<div class="divInput">
+				<input type="text" name="cidadeCadastro" id="cidadeCadastro" autocomplete="off" placeholder=" " required>
+				<span class="border-input"></span>
+				<i class="bi bi-building"></i>
+				<label for="cidadeCadastro">Cidade</label>
+			</div>	
+			<div class="divInput">
+				<input type="text" name="bairroCadastro" id="bairroCadastro" autocomplete="off" placeholder=" " required>
+				<span class="border-input"></span>
+				<i class="bi bi-signpost"></i>
+				<label for="bairroCadastro">Bairro</label>
+			</div>		
+			<div class="divInput">
+				<input type="text" name="ruaCadastro" id="ruaCadastro" autocomplete="off" placeholder=" " required>
+				<span class="border-input"></span>
+				<i class="bi bi-house"></i>
+				<label for="ruaCadastro">Rua/Logradouro</label>
+			</div>
+			<div class="divInput">
+				<input type="text" name="complementoCadastro" id="complementoCadastro" autocomplete="off" placeholder=" " required>
+				<span class="border-input"></span>
+				<i class="bi bi-plus"></i>
+				<label for="complementoCadastro">Número</label>
+			</div>		
+		</div>
+
+		<button id="btnLimparSacola"><i class="bi bi-x"></i> Limpar Sacola</button>
+		<button id="btnFinalizarCompra"><i class="bi bi-credit-card"></i> Finalizar compra com o <strong>cartão de crédito</strong></button>
+		<button id="btnFinalizaCompraWhatsapp"><i class="bi bi-whatsapp"></i> Finalizar compra pelo Whatsapp</button>
+	</div>
+</div>
+
+<div class="bg-modal" id="produtoModal">
+	<div class="modal">
+		<i class="bi bi-x icone-fechar"></i>
+		<h2 id="tituloProdutoModal">Produto</h2>
+		<p id="descricaoProdutoModal"></p>
+		<img id="imgProdutoModal" src="">
+	</div>
+</div>
+
+<div id="sacolaFlutuante">
+	Sacola <i class="bi bi-bag"></i> <span class="valorProdutosSacola">0</span>
+</div>
+
+<%- include('partials/footer'); -%>
