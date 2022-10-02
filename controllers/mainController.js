@@ -150,8 +150,8 @@ module.exports.finaliza_compra_post = async (req, res) => {
         payment_method_types: ['card'],
         line_items: produtosMapeados,
         mode: 'payment',
-        success_url: `http://localhost:3000?codigoCompra=${codigoCompra}`,
-        cancel_url: `http://localhost:3000`
+        success_url: `https://lojafinapalha.herokuapp.com/?codigoCompra=${codigoCompra}`,
+        cancel_url: `https://lojafinapalha.herokuapp.com/`
       });
 
       res.json({url: session.url});
