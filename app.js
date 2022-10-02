@@ -2,12 +2,12 @@ const express = require('express');
 const mongoose = require('mongoose');
 const mainRoutes = require('./routes/mainRoutes');
 const session = require('express-session');
-const { senhaDB } = require('./config');
+const { senhaDB, codigoSessao } = require('./config');
 
 const app = express();
 
 app.use(session({
-	secret: '<session_secret>', 
+	secret: codigoSessao, 
 	resave: true, 
 	saveUninitialized: true,
 	maxAge: 3600000	// 1 hour (in milliseconds)
