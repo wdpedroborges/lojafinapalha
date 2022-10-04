@@ -213,8 +213,8 @@ module.exports.sobre_nos_get = (req, res) => {
    res.render('sobre-nos');
 }
 
-module.exports.seja_afiliado_get = (req, res) => {
-   res.render('seja-afiliado');
+module.exports.afiliados_get = (req, res) => {
+   res.render('afiliados');
 }
 
 module.exports.rastrear_pedido_get = (req, res) => {

@@ -58,7 +58,7 @@ router.get('/dados-cep/:cep', mainController.dados_cep_get);
 
 router.get('/contato', mainController.contato_get);
 router.get('/sobre-nos', mainController.sobre_nos_get);
-router.get('/seja-afiliado', mainController.seja_afiliado_get);
+router.get('/afiliados', mainController.afiliados_get);
 router.get('/rastrear-pedido', mainController.rastrear_pedido_get);
 
 router.get('/logout-admin', mainController.logout_admin_get);

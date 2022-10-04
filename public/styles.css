@@ -52,6 +52,12 @@ h2:after {
     color: var(--segunda-cor);
 }
 
+.centralizado {
+	padding: 1rem;
+	margin: 0 auto;
+	width: 75%;
+}
+
 .slider {
 	height: 70vh;
 	background: linear-gradient(to right, rgba(0, 0, 0, .7), rgba(0, 0, 0, .9)), url('../modelos/modelo-3.png');
@@ -697,6 +703,10 @@ form button {
 	color: brown;
 	font-weight: bolder;
 	font-size: 1.5rem;
+}
+
+#resultadoBuscaAfiliado {
+	display: none;
 }
 
 @keyFrames sobeLabel {

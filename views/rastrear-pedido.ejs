@@ -1,7 +1,21 @@
 <%- include('partials/head'); -%>
 <main>
-	<section id="rastrearPedido">
+	<section id="rastrearPedido" class="centralizado">
 		<h2>Rastrear pedido</h2>
+		<p>Aqui verificar se a compra foi confirmada e encontrar o código de rastreio.</p>
+		<div class="divInput">
+			<input type="text" name="nomeRastreio" id="nomeRastreio" autocomplete="off" placeholder=" " required>
+			<span class="border-input"></span>
+			<i class="bi bi-search"></i>
+			<label for="nomeRastreio">Nome: </label>
+		</div>
+		<div class="divInput">
+			<input type="text" name="telefoneRastreio" id="telefoneRastreio" autocomplete="off" placeholder=" " required>
+			<span class="border-input"></span>
+			<i class="bi bi-search"></i>
+			<label for="telefoneRastreio">Telefone: </label>
+		</div>
+		<button>Buscar</button>
 	</section>
 </main>
 <%- include('partials/footer'); -%>

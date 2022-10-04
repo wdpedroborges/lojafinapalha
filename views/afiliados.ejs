@@ -1,0 +1,24 @@
+<%- include('partials/head'); -%>
+<main>
+	<section id="afiliados" class="centralizado">
+		<h2>Afiliados</h2>
+		<p>Informe abaixo seu nome de afiliado para verificar suas vendas.</p>
+		<div class="divInput">
+			<input type="text" name="nomeAfiliado" id="nomeAfiliado" autocomplete="off" placeholder=" " required>
+			<span class="border-input"></span>
+			<i class="bi bi-search"></i>
+			<label for="nomeAfiliado">Nome</label>
+		</div>
+		<button id="btnBuscaAfiliado">Buscar</button>
+
+		<div id="resultadoBuscaAfiliado">
+			<h3>Vendas aguardando confirmação:</h3>
+			<h4>Valor a ser repassado: R$0,00</h4>
+			<p>Nenhuma venda a ser confirmada...</p>
+			<h3>Vendas confirmadas:</h3>
+			<h4>Valor já repassado: R$0,00</h4>
+			<p>Nenhuma venda confirmada...</p>
+		</div>
+	</section>
+</main>
+<%- include('partials/footer'); -%>
