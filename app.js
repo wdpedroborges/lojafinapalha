@@ -23,7 +23,7 @@ app.set('view engine', 'ejs');
 // conexão com o banco de dados
 const dbURIOnline = `mongodb+srv://LojaFinaPalha:${senhaDB}@cluster0.fcew9vg.mongodb.net/?retryWrites=true&w=majority`;
 const dbURIOffline = `mongodb://localhost:27017`;
-mongoose.connect(dbURIOffline, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(dbURIOnline, { useNewUrlParser: true, useUnifiedTopology: true })
   .then((result) => { console.log('Conectado.'); app.listen(process.env.PORT || 3000)})
   .catch((err) => console.log(err));
 
