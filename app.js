@@ -21,8 +21,9 @@ app.use(express.json());
 app.set('view engine', 'ejs');
 
 // conexão com o banco de dados
-const dbURI = `mongodb+srv://LojaFinaPalha:${senhaDB}@cluster0.fcew9vg.mongodb.net/?retryWrites=true&w=majority`;
-mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
+const dbURIOnline = `mongodb+srv://LojaFinaPalha:${senhaDB}@cluster0.fcew9vg.mongodb.net/?retryWrites=true&w=majority`;
+const dbURIOffline = `mongodb://localhost:27017`;
+mongoose.connect(dbURIOffline, { useNewUrlParser: true, useUnifiedTopology: true })
   .then((result) => { console.log('Conectado.'); app.listen(process.env.PORT || 3000)})
   .catch((err) => console.log(err));
 

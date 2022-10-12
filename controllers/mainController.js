@@ -27,6 +27,75 @@ module.exports.login_admin_post = (req, res) => {
     }
 }
 
+module.exports.busca_afiliado_post = async (req, res) => {
+  const { nomeAfiliado } = req.body;
+
+  console.log(`Buscando afiliado "${nomeAfiliado} . . ."`);
+
+  busca = await Venda.find({afiliado: nomeAfiliado});
+
+  let comprasNaoRepassadas = [], comprasRepassadas = [];
+  let valorASerRepassado = 0, valorRepassado = 0;
+
+  for (let i = 0; i < busca.length; i++) {
+    if (busca[i].repasse !== 'Sim') {
+
+      let infoProdutos = JSON.parse(busca[i].infoProdutos);
+      let totLocal = 0;
+
+      for (let j = 0; j < infoProdutos.length; j++) {
+        if (infoProdutos[j].nome !== 'frete' && infoProdutos[j].nome !== 'Frete') {
+          switch(infoProdutos[j].nome) {
+            case 'Fina Palha Tradicional':
+              totLocal += (parseFloat(infoProdutos[j].preco) * 0.1);
+              break;
+            case 'Fina Palha Premium':
+              totLocal += (parseFloat(infoProdutos[j].preco) * 0.05);
+              break;
+          }
+        }
+      }
+
+      valorASerRepassado += totLocal;
+      comprasNaoRepassadas.push({comprador: busca[i].nomeSobrenome, dataHora: busca[i].dataHora, valorASerRepassado: totLocal});
+    } else {
+      let infoProdutos = JSON.parse(busca[i].infoProdutos);
+      let totLocal = 0;
+
+      for (let j = 0; j < infoProdutos.length; j++) {
+        if (infoProdutos[j].nome !== 'frete' || infoProdutos[j].nome !== 'Frete') {
+          switch(infoProdutos[j].nome) {
+            case 'Fina Palha Tradicional':
+              totLocal += (parseFloat(infoProdutos[j].preco) * 0.1);
+              break;
+            case 'Fina Palha Premium':
+              totLocal += (parseFloat(infoProdutos[j].preco) * 0.05);
+              break;
+          }
+        }
+      }
+
+      valorRepassado += totLocal;
+      comprasRepassadas.push({comprador: busca[i].nomeSobrenome, dataHora: busca[i].dataHora, valorRepassado: totLocal});      
+    }
+  }
+
+  // console.log(comprasNaoRepassadas);
+  // console.log(comprasRepassadas);
+
+  res.status(201).json({ comprasNaoRepassadas, comprasRepassadas, valorASerRepassado, valorRepassado });
+}
+
+module.exports.busca_compra_post = async (req, res) => {
+  const { nomeRastreio, telefoneRastreio } = req.body;
+
+  console.log(`Buscando compra de "${nomeRastreio} . . ."`);
+
+  busca = await Venda.find({nomeSobrenome: nomeRastreio, telefone: telefoneRastreio});
+
+  res.status(201).json({ comprasFeitas: busca });
+}
+
 module.exports.home_get = (req, res) => {
   Produto.find()
     .then(result => {
@@ -47,20 +116,6 @@ module.exports.produtos_get = (req, res) => {
     });
 }
 
-module.exports.produtos_post = async (req, res) => {
-  const { titulo, descricao, preco } = req.body;
-  const imagem = req.file.filename;
-
-  try {
-      const produto = await Produto.create({ titulo, descricao, preco, imagem });
-      await produto.save();
-      console.log('Produto cadastrado com sucesso.');
-      res.status(201).json('Produto cadastrado com sucesso.');
-  } catch(e) {
-      res.status(400).json(e);
-  }
-}
-
 module.exports.finaliza_compra_post = async (req, res) => {
   let dadosComprador = req.body.dadosComprador;
   let meioVenda = req.body.meioVenda;
@@ -69,15 +124,13 @@ module.exports.finaliza_compra_post = async (req, res) => {
   data = new Date();
   let codigoCompra = data.getTime();
 
-  // verifica novamente o preço de cada item, mas desta vez pegando o preço no bd
-  let produtosDb = await Produto.find();
-  produtosDb.forEach(produto => {
-    for (let i = 0; i < produtos.length; i++) {
-      if (produtos[i].nome === produto.nome) {
-        produtos[i].preco = parseFloat(produto.preco);
-      }
+  for (let i = 0; i < produtos.length; i++) {
+    if (produtos[i].nome === 'Fina Palha Tradicional') {
+      produtos[i].preco = parseFloat(60);
+    } else if (produtos[i].nome === 'Fina Palha Premium') {
+      produtos[i].preco = parseFloat(100);
     }
-  });
+  }
 
   console.log(meioVenda);
   console.log(produtos);
@@ -95,13 +148,14 @@ module.exports.finaliza_compra_post = async (req, res) => {
     nVlDiametro: '0',
   };
   let promiseFrete = calcularPrecoPrazo(args).then((response) => {
-    return {nome: 'frete', quantidade: 1, preco: parseFloat(response[0].Valor)};
+    return {nome: 'Frete', quantidade: 1, preco: parseFloat(response[0].Valor)};
   });
   let frete = await promiseFrete;
   produtos.push(frete);
 
   // registra a compra feita
   let vendaRegistrada = false;
+  const d = new Date();
   try {
       const venda = await Venda.create({ 
           nomeSobrenome: dadosComprador.nomeCadastro,
@@ -112,6 +166,7 @@ module.exports.finaliza_compra_post = async (req, res) => {
           rua: dadosComprador.ruaCadastro,
           complemento: dadosComprador.complementoCadastro,
           cep: dadosComprador.cepCadastro,
+          dataHora: `${d.getDay()}/${d.getMonth()}/${d.getFullYear()} ${d.getHours()}:${d.getMinutes()}`,
           infoProdutos: JSON.stringify(produtos),
           meioVenda: meioVenda,
           afiliado: afiliado,

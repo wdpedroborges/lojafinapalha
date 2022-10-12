@@ -1,7 +1,49 @@
 <%- include('partials/head'); -%>
+<style type="text/css">
+	div {
+		text-align: justify;
+	}
+
+	.imgTexto {
+		border-radius: 1rem;
+		height: 100%;
+	}
+
+	.alinhamentoLocal {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-around;
+		padding: 1rem;
+	}
+
+	.textoLocal {
+		height: 100%;
+		width: 50%;
+	}
+
+	@media (max-width: 1080px) {
+		.alinhamentoLocal {
+			flex-direction: column-reverse;
+		}
+
+		.textoLocal {
+			width: 80%;
+		}
+	}
+</style>
 <main>
 	<section id="sobreNos">
 		<h2>Sobre nós</h2>
+		<div class="alinhamentoLocal">
+			<img src="modelos/modelo-7.png" alt="Modelo Fina Palha" title="Modelo Fina Palha" class="imgTexto">
+			<div class="centralizado textoLocal">
+				<p>
+					Criada em 2019, o palheiros <strong>Fina Palha</strong> é uma empresa mineira que trabalha na fabricação de cigarros de palha. Com produtos totalmente naturais, os ingredientes não recebem nenhum tipo de mistura, sendo selecionados e especionado cada etapas de produção, para que tenha ótimo consumo.</p>
+				<p>
+					Temos o compromisso de produzir de forma artesanal o que a de melhor no mercado, como Palha e fumo de qualidade. Trabalhamos com o cigarro de palha Premium e tradicional. Temos a missão em levar um produto de qualidade para nossos clientes com responsabilidade mantendo uma qualidade e sabor inigualável para um melhor consumo.
+				</p>
+			</div>
+		</div>
 	</section>
 </main>
 <%- include('partials/footer'); -%>

@@ -40,6 +40,11 @@ const vendaSchema = new mongoose.Schema({
 		required: [true, 'por favor, informe um CEP para o comprador'],
 		lowercase: true
 	},
+	dataHora: {
+		type: String,
+		required: [true, 'por favor, informe a data da compra'],
+		lowercase: true
+	},
 	infoProdutos: {
 		type: String,
 		required: true,

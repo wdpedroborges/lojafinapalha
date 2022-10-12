@@ -54,70 +54,9 @@
 		    <% } %>
 		</div>
 	</section>
-	<section id="cadastrarProduto">
-		<form action="/produtos" method="POST" enctype="multipart/form-data">
-			<h2>Cadastrar produto</h2>
-			<p class="mensagem"></p>
-			<div class="divInput">
-				<input type="text" name="titulo" id="titulo" autocomplete="off" placeholder=" " required>
-				<span class="border-input"></span>
-				<i class="bi bi-caret-right"></i>
-				<label for="titulo">Título*</label>
-			</div>
-			<div class="divInput">
-				<input type="text" name="descricao" id="descricao" autocomplete="off" placeholder=" " required>
-				<span class="border-input"></span>
-				<i class="bi bi-caret-right"></i>
-				<label for="descricao">Descrição*</label>
-			</div>
-			<div class="divInput">
-				<input type="text" name="preco" id="preco" autocomplete="off" placeholder=" " required>
-				<span class="border-input"></span>
-				<i class="bi bi-caret-right"></i>
-				<label for="preco">Preço*</label>
-			</div>
-			<div class="divInput">
-				<input type="file" name="imagem" id="imagem" autocomplete="off" placeholder=" " required>
-				<span class="border-input"></span>
-				<i class="bi bi-caret-right"></i>
-				<label for="imagem">Imagem*</label>
-			</div>
-			<button>Cadastrar</button>
-		</form>	
-	</section>
 </main>
 <script>
-	const form = document.querySelector('form');
 	const mensagem = document.querySelector('.mensagem');
-
-	form.addEventListener('submit', async e => {
-		e.preventDefault();
-		const formData = new FormData(form);
-		try {
-			const res = await fetch('/produtos', {
-				method: 'POST',
-				body: formData
-			});
-			const data = await res.json();
-			if (data !== 'Produto cadastrado com sucesso.') {
-				if (data.code == '11000') {
-					mensagem.textContent = 'Já existe um produto cadastrado com esse nome.';
-				} else {
-					mensagem.textContent = data.message;
-				}
-			} else {
-				mensagem.textContent = 'Produto cadastrado com sucesso.';
-
-				form.titulo.value = '';
-				form.descricao.value = '';
-				form.preco.value = '';
-				form.imagem.value = '';
-
-			}
-		} catch(err) {
-			console.log(err);
-		}
-	});
 
 	// botões
 	const btnExcluirVenda = [... document.querySelectorAll('.btnExcluirVenda')];

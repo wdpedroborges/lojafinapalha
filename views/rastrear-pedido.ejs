@@ -15,7 +15,66 @@
 			<i class="bi bi-search"></i>
 			<label for="telefoneRastreio">Telefone: </label>
 		</div>
-		<button>Buscar</button>
+		<button id="buscarCompra">Buscar</button>
+
+		<div id="resultadoBuscaCompra">
+			<h3>Compras encontradas:</h3>
+		</div>
 	</section>
 </main>
+<script type="text/javascript">
+	const buscarCompra = document.getElementById('buscarCompra');
+
+	function tratamentoProdutos(produtos) {
+		produtos = JSON.parse(produtos);
+		let string = '';
+
+		console.log(produtos);
+
+		for (let i = 0; i < produtos.length; i++) {
+			if (produtos[i].nome !== 'frete' && produtos[i].nome !== 'Frete') {
+				string += `${produtos[i].nome} - Quantidade: ${produtos[i].quantidade}\n`;
+			}
+		}
+
+		return string;
+	}
+
+	async function enviaPost(dados, endpoint) {
+		try {
+			const res = await fetch(endpoint, {
+				method: 'POST',
+				body: dados,
+				headers: {'Content-Type': 'application/json'}
+			});
+			const data = await res.json();
+
+			let resultadoBuscaCompra = document.getElementById('resultadoBuscaCompra');
+
+			for (let i = 0; i < data.comprasFeitas.length; i++) {
+				let atual = data.comprasFeitas[i];
+				let info = document.createElement('p');
+
+				if (atual.codigoRastreio == 'Não informado') {
+					info.innerText = `\nSeu produto ainda não foi enviado, mas em breve será! Por favor, continue aguardando.\nCódigo de rastreio: ${atual.codigoRastreio}\nComprador: ${atual.nomeSobrenome.toUpperCase()}\nData/Hora: ${atual.dataHora}\nProdutos comprados: ${tratamentoProdutos(atual.infoProdutos)}`;
+				} else {
+					info.innerText = `\nOba, seu produto já foi enviado! Use o código de rastreio abaixo no site do correrios para rastreá-lo!\nCódigo de rastreio: ${atual.codigoRastreio}\nComprador: ${atual.nomeSobrenome.toUpperCase()}\nData/Hora: ${atual.dataHora}\nProdutos comprados: ${tratamentoProdutos(atual.infoProdutos)}`;					
+				}
+				resultadoBuscaCompra.append(info);
+
+			}
+
+		} catch(err) {
+			console.log(err);
+		}
+	}
+	buscarCompra.addEventListener('click', () => {
+		let nomeRastreio = document.getElementById('nomeRastreio').value;
+		let telefoneRastreio = document.getElementById('telefoneRastreio').value;
+
+		console.log(nomeRastreio, telefoneRastreio);
+
+		enviaPost(JSON.stringify({ nomeRastreio, telefoneRastreio }), '/busca-compra');
+	});
+</script>
 <%- include('partials/footer'); -%>

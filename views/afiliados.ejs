@@ -12,13 +12,63 @@
 		<button id="btnBuscaAfiliado">Buscar</button>
 
 		<div id="resultadoBuscaAfiliado">
-			<h3>Vendas aguardando confirmação:</h3>
-			<h4>Valor a ser repassado: R$0,00</h4>
-			<p>Nenhuma venda a ser confirmada...</p>
-			<h3>Vendas confirmadas:</h3>
-			<h4>Valor já repassado: R$0,00</h4>
-			<p>Nenhuma venda confirmada...</p>
+			<h3 id="tituloNomeAfiliado"></h3>
+			<h4 id="valorASerRepassado"></h4>
+			<h3>Vendas não repassadas:</h3>
+			<div id="vendasNaoRepassadas"></div>
+			<h4 id="valorRepassado"></h4>
+			<h3>Vendas repassadas:</h3>
+			<div id="vendasRepassadas"></div>
 		</div>
 	</section>
 </main>
+<script type="text/javascript">
+	const btnBuscaAfiliado = document.getElementById('btnBuscaAfiliado');
+	async function enviaPost(dados, endpoint) {
+		try {
+			const res = await fetch(endpoint, {
+				method: 'POST',
+				body: dados,
+				headers: {'Content-Type': 'application/json'}
+			});
+			const data = await res.json();
+
+			let resultadoBuscaAfiliado = document.getElementById('resultadoBuscaAfiliado');
+			let nomeAfiliado = document.getElementById('nomeAfiliado');
+			let tituloNomeAfiliado = document.getElementById('tituloNomeAfiliado');
+			let valorASerRepassado = document.getElementById('valorASerRepassado');
+			let valorRepassado = document.getElementById('valorRepassado');
+			let vendasRepassadas = document.getElementById('vendasRepassadas');
+			let vendasNaoRepassadas = document.getElementById('vendasNaoRepassadas');
+
+			resultadoBuscaAfiliado.style.display = 'block';
+
+			tituloNomeAfiliado.innerText = `Resultado de busca para o afiliado "${nomeAfiliado.value}"`;
+			valorASerRepassado.innerText = `Valor total a ser repassado: R$${parseFloat(data.valorASerRepassado)},00`;
+			valorRepassado.innerText = `Valor total já repassado: R$${parseFloat(data.valorRepassado)},00`;
+
+			// Loop para vendas não repassadas
+			for (let i = 0; i < data.comprasNaoRepassadas.length; i++) {
+				let atual = data.comprasNaoRepassadas[i];
+				let info = document.createElement('p');
+				info.innerText = `Comprador: ${atual.comprador.toUpperCase()}\nData/Hora: ${atual.dataHora}\nValor a ser repassado: R$${atual.valorASerRepassado}`;
+				vendasNaoRepassadas.append(info);
+			}
+			// Loop para vendas repassadas
+			for (let i = 0; i < data.comprasRepassadas.length; i++) {
+				let atual = data.comprasRepassadas[i];
+				let info = document.createElement('p');
+				info.innerText = `Comprador: ${atual.comprador.toUpperCase()}\nData/Hora: ${atual.dataHora}\nValor a ser repassado: R$${atual.valorRepassado}`;
+				vendasRepassadas.append(info);
+			}
+
+		} catch(err) {
+			console.log(err);
+		}
+	}
+	btnBuscaAfiliado.addEventListener('click', () => {
+		let nomeAfiliado = document.getElementById('nomeAfiliado');
+		enviaPost(JSON.stringify({nomeAfiliado: nomeAfiliado.value}), '/busca-afiliado');
+	});
+</script>
 <%- include('partials/footer'); -%>

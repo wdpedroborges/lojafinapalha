@@ -45,7 +45,6 @@ router.post('/login-admin', mainController.login_admin_post);
 router.get('/', mainController.home_get);
 
 router.get('/produtos', requireAuth, mainController.produtos_get);
-router.post('/produtos', mainController.produtos_post);
 router.post('/finaliza-compra', mainController.finaliza_compra_post);
 router.post('/confirma-compra', mainController.confirma_compra_post);
 
@@ -61,6 +60,11 @@ router.get('/sobre-nos', mainController.sobre_nos_get);
 router.get('/afiliados', mainController.afiliados_get);
 router.get('/rastrear-pedido', mainController.rastrear_pedido_get);
 
+router.post('/busca-afiliado', mainController.busca_afiliado_post);
+router.post('/busca-compra', mainController.busca_compra_post);
+
+
 router.get('/logout-admin', mainController.logout_admin_get);
+
 
 module.exports = router;

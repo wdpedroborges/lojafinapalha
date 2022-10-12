@@ -4,21 +4,20 @@
 	<section id="produtos">
 		<h2>Produtos</h2>
 		<div class="grid">
-			<% if (produtos.length > 0) { %>
-				<% produtos.forEach(produto => { %>
-					<div class="produto">
-						<img src="produtos/<%= produto.imagem %>" class="imagemProduto">
-						<h3 class="tituloProduto" title="<%= produto.descricao %>"><%= produto.titulo %></h3>
-						<span class="preco" title="<%= produto.titulo %>">R$<%= produto.preco %></span>
-						<button class="btnAdicionarSacola" title="<%= produto.titulo %>"><i class="bi bi-bag"></i> Adicionar à sacola</button>
-						<% if (usuario) { %>
-							<button class="btnRemoverProduto" title="<%= produto._id %>"><i class="bi bi-trash"></i></button>
-						<% } %>
-					</div>
-				<% }) %>
-		    <% } else { %>
-		      <p>Nenhum produto cadastrado...</p>
-		    <% } %>
+			<div class="produto">
+				<img src="produtos/tradicional0.png" class="imagemProduto">
+				<h3 class="tituloProduto" title="Fina Palha Tradicional">Fina Palha Tradicional</h3>
+				<p class="descricaoProduto">Palha de primeira qualidade, fumo selecionado. Contém 10 maços, cada maço contém 20 cigarros.</p>
+				<span class="preco" title="Fina Palha Tradicional">R$60,00</span>
+				<button class="btnAdicionarSacola" title="Fina Palha Tradicional"><i class="bi bi-bag"></i> Adicionar à sacola</button>
+			</div>
+			<div class="produto">
+				<img src="produtos/premium0.png" class="imagemProduto">
+				<h3 class="tituloProduto" title="Fina Palha Premium">Fina Palha Premium</h3>
+				<p class="descricaoProduto">Palha de primeira qualidade, fumo selecionado. Contém 10 maços, cada maço contém 20 cigarros, filtro e piteira!</p>
+				<span class="preco" title="Fina Palha Premium">R$100,00</span>
+				<button class="btnAdicionarSacola" title="Fina Palha Premium"><i class="bi bi-bag"></i> Adicionar à sacola</button>
+			</div>
 		</div>
 	</section>
 </main>
